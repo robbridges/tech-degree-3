@@ -30,17 +30,20 @@ const tShirtSelecion = () => {
   tShirtDesignSelector.addEventListener('change', e => {
     tShirtColorSelector.removeAttribute('hidden');
     for (let i = 1; i < tShirtOptions.length; i++) {
-      // colorSelector.selectedIndex = '0';
       if (e.target.value === 'js puns') {
-        colorSelector.selectedIndex = '1';
+            colorSelector.selectedIndex = '1';
+            tShirtOptions[i].removeAttribute('hidden');
+            if (tShirtOptions[i].attributes['data-theme'].value !== 'js puns') {
+              tShirtOptions[i].setAttribute('hidden', true);
+            }
+
       } else if (e.target.value ='heart js') {
         colorSelector.selectedIndex = '4';
-      }
-      if (e.target.value === tShirtOptions[i].attributes['data-theme'].value) {
         tShirtOptions[i].removeAttribute('hidden');
-     } else if(e.target.value !== tShirtOptions[i].attributes['data-theme'].value) {
-       tShirtOptions[i].setAttribute('hidden', true);
-     } 
+        if (tShirtOptions[i].attributes['data-theme'].value !== 'heart js') {
+          tShirtOptions[i].setAttribute('hidden', true);
+        }
+      }
     }
     
 
