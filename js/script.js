@@ -12,6 +12,8 @@ const hideJobRoleField= () => {
   jobRole.addEventListener('change', e => {
     if(e.target.value === 'other') {
       otherJobRoleField.style.display = '';
+    } else {
+      otherJobRoleField.style.display ='none';
     }
     
   });
@@ -21,18 +23,22 @@ const tShirtSelecion = () => {
   const tShirtDesignSelector = document.querySelector('#design');
   const tShirtColorSelector = document.querySelector('.shirt-colors');
   const tShirtOptions = tShirtColorSelector.lastElementChild.children
-  tShirtColorSelector.style.display = 'none';
-  tShirtDesignSelector.addEventListener('change', e => {
-    
-    tShirtColorSelector.style.display = '';
-    //for (let i = 0; i < tShirtOptions.length; i++) {
-      // if(e.target.value !== tShirtOptions[i].attributes['data-theme']);
-      //   tShirtOptions[i].setAttribute('hidden', true);
-    // }
+  
+  tShirtColorSelector.setAttribute('hidden', true);
 
-      
+  tShirtDesignSelector.addEventListener('change', e => {
+    tShirtColorSelector.removeAttribute('hidden');
+    for (let i = 1; i < tShirtOptions.length; i++) {
+      if (e.target.value === tShirtOptions[i].attributes['data-theme'].value) {
+        tShirtOptions[i].removeAttribute('hidden');
+     } else if(e.target.value !== tShirtOptions[i].attributes['data-theme'].value) {
+       tShirtOptions[i].setAttribute('hidden', true);
+     } 
+    }
     
+
   });
+  
 
 }
 
