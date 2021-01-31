@@ -25,9 +25,13 @@ const tShirtSelecion = () => {
   tShirtDesignSelector.addEventListener('change', e => {
     
     tShirtColorSelector.style.display = '';
-    for (let i = 0; i < tShirtOptions.length; i++) {
-      console.log(tShirtOptions[i].value);
-    }
+    //for (let i = 0; i < tShirtOptions.length; i++) {
+      // if(e.target.value !== tShirtOptions[i].attributes['data-theme']);
+      //   tShirtOptions[i].setAttribute('hidden', true);
+    // }
+
+      
+    
   });
 
 }
