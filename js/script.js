@@ -23,12 +23,19 @@ const tShirtSelecion = () => {
   const tShirtDesignSelector = document.querySelector('#design');
   const tShirtColorSelector = document.querySelector('.shirt-colors');
   const tShirtOptions = tShirtColorSelector.lastElementChild.children
-  
+  const colorSelector = document.querySelector('#color');
   tShirtColorSelector.setAttribute('hidden', true);
+  
 
   tShirtDesignSelector.addEventListener('change', e => {
     tShirtColorSelector.removeAttribute('hidden');
     for (let i = 1; i < tShirtOptions.length; i++) {
+      // colorSelector.selectedIndex = '0';
+      if (e.target.value === 'js puns') {
+        colorSelector.selectedIndex = '1';
+      } else if (e.target.value ='heart js') {
+        colorSelector.selectedIndex = '4';
+      }
       if (e.target.value === tShirtOptions[i].attributes['data-theme'].value) {
         tShirtOptions[i].removeAttribute('hidden');
      } else if(e.target.value !== tShirtOptions[i].attributes['data-theme'].value) {
