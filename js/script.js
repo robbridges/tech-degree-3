@@ -62,8 +62,66 @@ const RegisterActivities = () => {
   });
 }
 
+const PaymentScreen = () => {
+  const paymentSelector = document.querySelector('#payment')
+  const payPalInfo = document.querySelector('#paypal');
+  const bitcoinDiv = document.querySelector('#bitcoin');
+  const creditCardDiv = document.querySelector('#credit-card')
+  payPalInfo.setAttribute('hidden', true);
+  bitcoinDiv.setAttribute('hidden', true);
+  paymentSelector.selectedIndex = '1';
+  paymentSelector.addEventListener('change', e => {
+    if (e.target.value === 'paypal') {
+      creditCardDiv.setAttribute('hidden', 'true');
+      bitcoinDiv.setAttribute('hidden', true);
+      payPalInfo.removeAttribute('hidden');
+    }
+    else if (e.target.value === 'bitcoin') {
+      creditCardDiv.setAttribute('hidden', 'true');
+      payPalInfo.setAttribute('hidden', true);
+      bitcoinDiv.removeAttribute('hidden');
+    }
+    else if(e.target.value === 'credit-card') {
+      payPalInfo.setAttribute('hidden', true);
+      bitcoinDiv.setAttribute('hidden', true);
+      creditCardDiv.removeAttribute('hidden');
+    }
+  });
+}
+
+const formSubmitValidation = () => {
+  const form = document.querySelector('.container').firstElementChild;
+  
+  form.addEventListener('submit', e => {
+    const name = document.querySelector('#name');
+    if (!name.value) {
+      e.preventDefault();
+      addErrorMessage(name);
+    }
+    
+  });
+
+
+}
+
+/*
+A fuction that we use to set the error label and css values to a input that did not validate correctly. It is supposed to be unhiding the label but it doesn't seem to be. 
+*/
+const addErrorMessage = (element, e) => {
+  
+  element.parentElement.classList.add("not-valid");
+  //element.parentElement.lastElementChild.removeAttribute('hidden'); TODO FIX THIS! It isn't display the element label
+  //element.parentElement.lastElementChild.style.display = ''; //Also not working, it is correctly targeting the right element, it's just not making it visible
+}
+
+
+
+
+
 
 
 hideJobRoleField();
 tShirtSelection();
 RegisterActivities();
+PaymentScreen();
+formSubmitValidation();
