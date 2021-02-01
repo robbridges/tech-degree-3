@@ -18,7 +18,10 @@ const hideJobRoleField= () => {
     
   });
 }
-
+/*
+An event that modivies the T shirt selection aspect of our form, it first hides the color until a value is selected, then it only allows the select option that belong
+to the correct shirt theme
+*/
 const tShirtSelection = () => {
   const tShirtDesignSelector = document.querySelector('#design');
   const tShirtColorSelector = document.querySelector('.shirt-colors');
@@ -47,7 +50,9 @@ const tShirtSelection = () => {
     }
   });
 }
-
+/*
+Updates the cost field at the bottom based on the cost attribute of the selected input, it also reduces the value should the user unclick
+*/
 const RegisterActivities = () => {
   const activities = document.querySelector('.activities');
   const activitiesTotal = document.querySelector('#activities-cost')
@@ -61,7 +66,9 @@ const RegisterActivities = () => {
     activitiesTotal.textContent = `Total: $${total}`
   });
 }
-
+/*
+Payment screen, it hides the content of other payment method instructions until they are selected
+*/
 const PaymentScreen = () => {
   const paymentSelector = document.querySelector('#payment')
   const payPalInfo = document.querySelector('#paypal');
@@ -95,8 +102,8 @@ const formSubmitValidation = () => {
   form.addEventListener('submit', e => {
     const name = document.querySelector('#name');
     if (!name.value) {
-      e.preventDefault();
-      addErrorMessage(name);
+      
+      addErrorMessage(name, e);
     }
     
   });
@@ -106,9 +113,11 @@ const formSubmitValidation = () => {
 
 /*
 A fuction that we use to set the error label and css values to a input that did not validate correctly. It is supposed to be unhiding the label but it doesn't seem to be. 
+@Param element {element} and HTML element that we are trying updating the class of, and also inserting into the page
+@Param e {event} standard event object also being passed as we want to prevent default of the page if there's an error
 */
 const addErrorMessage = (element, e) => {
-  
+  e.preventDefault();
   element.parentElement.classList.add("not-valid");
   //element.parentElement.lastElementChild.removeAttribute('hidden'); TODO FIX THIS! It isn't display the element label
   //element.parentElement.lastElementChild.style.display = ''; //Also not working, it is correctly targeting the right element, it's just not making it visible
