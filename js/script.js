@@ -224,9 +224,7 @@ const containsNumbers = text => {
 const containsSpecialCharacters = (text) => {
   return regexTester(/\W/, text);
 }
-const containsBothNumbersAndSpecialCharacters = text => {
-  return regexTester(/\W\d/, text);
-}
+
 /*
 Checks to make sure at least one of the selected activities is checked.
 */
