@@ -101,26 +101,59 @@ const formSubmitValidation = () => {
   
   form.addEventListener('submit', e => {
     const name = document.querySelector('#name');
-    if (!name.value) {
-      
+    const email = document.querySelector('#email');
+    const activities = document.querySelector('#activities-box');
+    if (!name.value || !isValidName(name.value)) {
       addErrorMessage(name, e);
+    }
+    if(!email.value || !isValidEmail(email.value)) {
+      addErrorMessage(email, e);
+    }
+    if (!checkActivites()) {
+      addFormErrorMessage(activities, e);
     }
     
   });
+}
 
+const isValidName = (text) => {
+  const regex = /[a-z]{1,}/i
+  return regex.test(text);
+}
 
+const isValidEmail = (text) => {
+  const regex = /^[^@]+@[^@.]+\.\w+$/i
+  return regex.test(text);
+}
+
+const checkActivites = () => {
+  const activitiesList = document.querySelectorAll('input'); 
+  for (let i =0; i < activitiesList.length; i++) {
+    if(activitiesList[i].checked) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /*
-A fuction that we use to set the error label and css values to a input that did not validate correctly. It is supposed to be unhiding the label but it doesn't seem to be. 
+A fuction that we use to set the error label and css values to a input that did not validate correctly. We then have to change the style of the display 
 @Param element {element} and HTML element that we are trying updating the class of, and also inserting into the page
-@Param e {event} standard event object also being passed as we want to prevent default of the page if there's an error
+@Param event {event} standard event object also being passed as we want to prevent default of the page if there's an error
 */
-const addErrorMessage = (element, e) => {
-  e.preventDefault();
+const addErrorMessage = (element, event) => {
+  event.preventDefault();
   element.parentElement.classList.add("not-valid");
-  //element.parentElement.lastElementChild.removeAttribute('hidden'); TODO FIX THIS! It isn't display the element label
-  //element.parentElement.lastElementChild.style.display = ''; //Also not working, it is correctly targeting the right element, it's just not making it visible
+  element.parentElement.lastElementChild.setAttribute('style', 'display: block;');
+}
+/*
+The form had a different family tree than the input fields, this method below targets those
+elements particiulary
+*/
+const addFormErrorMessage =(element, event) => {
+  event.preventDefault();
+  element.parentElement.firstElementChild.classList.add("not-valid");
+  element.parentElement.lastElementChild.setAttribute('style', 'display: block;');
 }
 
 
