@@ -103,6 +103,10 @@ const formSubmitValidation = () => {
     const name = document.querySelector('#name');
     const email = document.querySelector('#email');
     const activities = document.querySelector('#activities-box');
+    const paymentSelector = document.querySelector('#payment')
+    const ccNumber =document.querySelector('#cc-num');
+    const zipCode = document.querySelector('#zip');
+    const cvvCode = document.querySelector('#cvv');
     if (!name.value || !isValidName(name.value)) {
       addErrorMessage(name, e);
     }
@@ -112,20 +116,68 @@ const formSubmitValidation = () => {
     if (!checkActivites()) {
       addFormErrorMessage(activities, e);
     }
+    if(paymentSelector.value = 'credit-card') {
+      if (!isValidCardNumber(ccNumber.value)) {
+        addErrorMessage(ccNumber, e);
+      }
+      if(!isValidCardNumber(zipCode.value)) {
+        addErrorMessage(zipCode, e);
+      }
+      if(!isValidCVV(cvvCode.value)) {
+        addErrorMessage(cvvCode, e);
+      }
+    }
+    
     
   });
 }
-
+/*
+Creating a fuction for all of our regex tests so that it can be passed into RegEx
+validation fuctions.
+@Param regex {regex} a regex expression that we want to test or replace
+@Param text {string} string that we want to test for a match with the regex
+*/
+const regexTester = (regex, text) => {
+  const regToTest = regex;
+  return regToTest.test(text);
+}
+/*
+Checks if valid name, only one or more letter should return a match
+@Param text {String} regex string we are comparing for a match
+*/
 const isValidName = (text) => {
-  const regex = /[a-z]{1,}/i
-  return regex.test(text);
+  regexTester(/^[a-z]{1,}$/i, text);
 }
-
+/*
+Checks if valid email, taken from the treehouse Course by Joel Kraft. 
+@Param text {String} regex string we are comparing for a match
+*/
 const isValidEmail = (text) => {
-  const regex = /^[^@]+@[^@.]+\.\w+$/i
-  return regex.test(text);
+  regexTester(/^[^@]+@[^@.]+\.\w+$/i, text);
+  
+}
+/*
+Checks if valid cc-Number, Should only match a string that starts and ends with 13 or more letters
+@Param text {String} regex string we are comparing for a match
+*/
+const isValidCardNumber = (text) => {
+  regexTester(/^\d{13,16}$/, text);
+  
+}
+/*
+Checks if valid zipcode, Should only match a 5 digit number
+@Param text {String} regex string we are comparing for a match
+*/
+const isValidZip = (text) => {
+  regexTester(/\d{5}/, text);
 }
 
+const isValidCVV = (text) => {
+  regexTester(/\d{3}/, text);
+}
+/*
+Checks to make sure at least one of the selected activities is checked.
+*/
 const checkActivites = () => {
   const activitiesList = document.querySelectorAll('input'); 
   for (let i =0; i < activitiesList.length; i++) {
@@ -135,6 +187,8 @@ const checkActivites = () => {
   }
   return false;
 }
+
+
 
 /*
 A fuction that we use to set the error label and css values to a input that did not validate correctly. We then have to change the style of the display 
