@@ -167,6 +167,7 @@ Checks if valid name, only one or more letter should return a match
 */
 const isValidName = (text) => {
   return regexTester(/[a-z]{1,}/i, text);
+  
 }
 /*
 Checks if valid email, taken from the treehouse Course by Joel Kraft. 
@@ -241,7 +242,10 @@ const validateForm =(element) => {
   element.parentElement.firstElementChild.classList.remove('not-vald');
   element.parentElement.lastElementChild.setAttribute('style', 'display: none;');
 }
-
+/*
+We are looping over each input element and adding an event listenter to them so that they
+can focus in and out when we tab through them. 
+*/
 const activititiesFocus = () => {
   const activitiesList = document.querySelectorAll('input');
   for (let i = 0; i < activitiesList.length; i++) {
