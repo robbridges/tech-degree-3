@@ -214,13 +214,24 @@ Checks if valid zipcode, Should only match a 5 digit number
 const isValidZip = (text) => {
   return regexTester(/\d{5}/, text);
 }
-
+/*
+Checks if valid cvv dode, Should only match a 3 digit number
+@Param text {String} regex string we are comparing for a match
+*/
 const isValidCVV = (text) => {
   return regexTester(/\d{3}/, text);
 }
+/*
+Checks if the text to test contains numbers. We use use when validating the name keyup event
+@Param text {String} regex string we are comparing for a match
+*/
 const containsNumbers = text => {
   return regexTester(/\d/, text);
 }
+/*
+Checks if the text to test contains special characters. We use use when validating the name keyup event
+@Param text {String} regex string we are comparing for a match
+*/
 const containsSpecialCharacters = (text) => {
   return regexTester(/\W/, text);
 }
@@ -251,7 +262,10 @@ const addErrorMessage = (element, event) => {
   element.parentElement.classList.remove('valid');
   element.parentElement.lastElementChild.setAttribute('style', 'display: block;');
 }
-
+/*
+A fuction that we use to set add a validated class to the input's label, and remove the not valid css styleization 
+@Param element {element} and HTML element that we are trying updating the class of, and also inserting into the page
+*/
 const validatedInput = (element) => {
   element.parentElement.className = 'valid';
   element.parentElement.classList.remove('not-valid');
@@ -266,6 +280,9 @@ const addFormErrorMessage =(element, event) => {
   element.parentElement.firstElementChild.className = 'not-valid';
   element.parentElement.lastElementChild.setAttribute('style', 'display: block;');
 }
+/*
+Special method to remove the css styleization added when the form was not correct. 
+*/
 const validateForm =(element) => {
   element.parentElement.firstElementChild.className = 'valid';
   element.parentElement.firstElementChild.classList.remove('not-vald');
