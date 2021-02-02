@@ -249,7 +249,7 @@ const containsSpecialCharacters = (text) => {
 Checks to make sure at least one of the selected activities is checked.
 */
 const checkActivites = () => {
-  const activitiesList = document.querySelectorAll('input'); 
+  const activitiesList = document.querySelectorAll('input[type="checkbox"]'); 
   for (let i =0; i < activitiesList.length; i++) {
     if(activitiesList[i].checked) {
       return true;
