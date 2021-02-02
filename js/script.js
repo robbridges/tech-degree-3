@@ -1,5 +1,7 @@
-const namefield = document.querySelector('#name');
-namefield.focus();
+const nameFieldFocus = () => {
+  const namefield = document.querySelector('#name');
+  namefield.focus();
+}
 
 
 /*
@@ -152,6 +154,26 @@ const formSubmitValidation = () => {
     
   });
 }
+
+const nameKeyUp = () => {
+  const name = document.querySelector('#name');
+  name.addEventListener('keyup', e => {
+    if (isValidName(name.value)) {
+      validatedInput(name,e)
+    }
+    if (containsSpecialCharacters(name.value)) {
+      name.parentElement.lastElementChild.textContent = 'Name cannot contain any special characters';
+      addErrorMessage(name,e);
+    }
+    if (containsNumbers(name.value)) {
+      name.parentElement.lastElementChild.textContent = 'Cannot contain a number';
+      addErrorMessage(name, e)
+    }
+    
+
+  })
+}
+
 /*
 Creating a fuction for all of our regex tests so that it can be passed into RegEx
 validation fuctions.
@@ -195,6 +217,15 @@ const isValidZip = (text) => {
 
 const isValidCVV = (text) => {
   return regexTester(/\d{3}/, text);
+}
+const containsNumbers = text => {
+  return regexTester(/\d/, text);
+}
+const containsSpecialCharacters = (text) => {
+  return regexTester(/\W/, text);
+}
+const containsBothNumbersAndSpecialCharacters = text => {
+  return regexTester(/\W\d/, text);
 }
 /*
 Checks to make sure at least one of the selected activities is checked.
@@ -246,8 +277,13 @@ const validateForm =(element) => {
 We are looping over each input element and adding an event listenter to them so that they
 can focus in and out when we tab through them. 
 */
+/*
+Simple function that adds event listers to every input type that is a checkbox.
+The listeners add and remove a focus when tabbing through the list. 
+*/
 const activititiesFocus = () => {
-  const activitiesList = document.querySelectorAll('input');
+  let activitiesList = document.querySelectorAll('input[type="checkbox"]');
+  activitiesList.addEventListener
   for (let i = 0; i < activitiesList.length; i++) {
     activitiesList[i].addEventListener('focus', e => {
       activitiesList[i].parentElement.className = 'focus';
@@ -255,26 +291,47 @@ const activititiesFocus = () => {
 
     activitiesList[i].addEventListener('blur', e => {
       activitiesList[i].parentElement.className = '';
-    })
-    activitiesList[i].addEventListener('change', e => {
-      console.log(activitiesList[i].attributes['data-day-and-time'].value);
-    })
+    });
+
   }
-  
 }
 
+/*
+We are checking to see if the actity that was selected is scheduled at the same time
+of other activities, if so we are disabling that activity so that users cannot schedule
+themselves for both
+*/
+const activityDisable = () => {
+  let activitiesList = document.querySelectorAll('input[type="checkbox"]');
 
-  
+  for (let i = 0; i < activitiesList.length; i++) {
+    activitiesList[i].addEventListener('change', e => {
+      
+      for (let i = 1; i < activitiesList.length; i++) {
+        if (e.target.checked && activitiesList[i] !== e.target && e.target.attributes['data-day-and-time'].value 
+          === activitiesList[i].attributes['data-day-and-time'].value) {
+            
+            activitiesList[i].parentElement.className ='disabled';
+          } else if (!e.target.checked && e.target.attributes['data-day-and-time'].value
+            === activitiesList[i].attributes['data-day-and-time'].value ) {
+              activitiesList[i].parentElement.className = '';
+          }
+      }
+    });
+  }
+}  
 
 
 
 
 
 
-
+nameFieldFocus();
 hideJobRoleField();
 tShirtSelection();
 RegisterActivities();
 PaymentScreen();
 formSubmitValidation();
+nameKeyUp();
 activititiesFocus();
+activityDisable();
