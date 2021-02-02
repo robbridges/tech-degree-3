@@ -1,3 +1,7 @@
+/*
+focuses the name field when the page is loaded.
+*/
+
 const nameFieldFocus = () => {
   const namefield = document.querySelector('#name');
   namefield.focus();
