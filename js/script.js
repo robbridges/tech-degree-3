@@ -110,21 +110,42 @@ const formSubmitValidation = () => {
     if (!name.value || !isValidName(name.value)) {
       addErrorMessage(name, e);
     }
+    if(name.value && isValidName(name.value)) {
+      validatedInput(name);
+    }
     if(!email.value || !isValidEmail(email.value)) {
       addErrorMessage(email, e);
     }
+    if (email.value && isValidEmail(email.value)) {
+      validatedInput(email)
+    }
     if (!checkActivites()) {
       addFormErrorMessage(activities, e);
+    }
+    if(checkActivites()) {
+      validateForm(activities);
     }
     if(paymentSelector.value === 'credit-card') {
       if (!isValidCardNumber(ccNumber.value)) {
         addErrorMessage(ccNumber, e);
       }
-      if(!isValidCardNumber(zipCode.value)) {
+
+      if (isValidCardNumber(ccNumber.value)) {
+        validatedInput(ccNumber);
+      }
+
+      if(!isValidZip(zipCode.value)) {
         addErrorMessage(zipCode, e);
       }
+      if(isValidZip(zipCode.value)) {
+        validatedInput(zipCode)
+      }
+
       if(!isValidCVV(cvvCode.value)) {
         addErrorMessage(cvvCode, e);
+      }
+      if(isValidCVV(cvvCode.value)) {
+        validatedInput(cvvCode);
       }
     }
     
@@ -145,9 +166,7 @@ Checks if valid name, only one or more letter should return a match
 @Param text {String} regex string we are comparing for a match
 */
 const isValidName = (text) => {
-  // const regToTest = /\w{1}/i;
-  // return regToTest.test(text);
-  return regexTester(/\w{1}/i, text);
+  return regexTester(/[a-z]{1,}/i, text);
 }
 /*
 Checks if valid email, taken from the treehouse Course by Joel Kraft. 
@@ -198,8 +217,15 @@ A fuction that we use to set the error label and css values to a input that did 
 */
 const addErrorMessage = (element, event) => {
   event.preventDefault();
-  element.parentElement.classList.add("not-valid");
+  element.parentElement.className = 'not-valid';
+  element.parentElement.classList.remove('valid');
   element.parentElement.lastElementChild.setAttribute('style', 'display: block;');
+}
+
+const validatedInput = (element) => {
+  element.parentElement.className = 'valid';
+  element.parentElement.classList.remove('not-valid');
+  element.parentElement.lastElementChild.setAttribute('style', 'display: none;');
 }
 /*
 The form had a different family tree than the input fields, this method below targets those
@@ -207,9 +233,34 @@ elements particiulary
 */
 const addFormErrorMessage =(element, event) => {
   event.preventDefault();
-  element.parentElement.firstElementChild.classList.add("not-valid");
+  element.parentElement.firstElementChild.className = 'not-valid';
   element.parentElement.lastElementChild.setAttribute('style', 'display: block;');
 }
+const validateForm =(element) => {
+  element.parentElement.firstElementChild.className = 'valid';
+  element.parentElement.firstElementChild.classList.remove('not-vald');
+  element.parentElement.lastElementChild.setAttribute('style', 'display: none;');
+}
+
+const activititiesFocus = () => {
+  const activitiesList = document.querySelectorAll('input');
+  for (let i = 0; i < activitiesList.length; i++) {
+    activitiesList[i].addEventListener('focus', e => {
+      activitiesList[i].parentElement.className = 'focus';
+    });
+
+    activitiesList[i].addEventListener('blur', e => {
+      activitiesList[i].parentElement.className = '';
+    })
+    activitiesList[i].addEventListener('change', e => {
+      console.log(activitiesList[i].attributes['data-day-and-time'].value);
+    })
+  }
+  
+}
+
+
+  
 
 
 
@@ -222,3 +273,4 @@ tShirtSelection();
 RegisterActivities();
 PaymentScreen();
 formSubmitValidation();
+activititiesFocus();
