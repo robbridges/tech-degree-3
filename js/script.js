@@ -323,12 +323,12 @@ const activititiesFocus = () => {
 /*
 We are checking to see if the actity that was selected is scheduled at the same time
 of other activities, if so we are disabling that activity so that users cannot schedule
-themselves for both
+themselves for both we ignore the first variable as it does not have a time that would conflict, or a date and time attribute
 */
 const activityDisable = () => {
   let activitiesList = document.querySelectorAll('input[type="checkbox"]');
 
-  for (let i = 0; i < activitiesList.length; i++) {
+  for (let i = 1; i < activitiesList.length; i++) {
     activitiesList[i].addEventListener('change', e => {
       
       for (let i = 1; i < activitiesList.length; i++) {
