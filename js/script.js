@@ -97,7 +97,9 @@ const PaymentScreen = () => {
     }
   });
 }
-
+/*
+A large method that does all of our form validations, it checks to make sure that a form element is check, and that input added is valid
+*/
 const formSubmitValidation = () => {
   const form = document.querySelector('.container').firstElementChild;
   
@@ -155,6 +157,9 @@ const formSubmitValidation = () => {
   });
 }
 
+/*
+Key up event to validate the name field while user is typing into it. In theory we should make one for all event form validation
+*/
 const nameKeyUp = () => {
   const name = document.querySelector('#name');
   name.addEventListener('keyup', e => {
@@ -340,7 +345,9 @@ const activityDisable = () => {
 
 
 
-
+/*
+We are just calling all of our functions real effort was put into this project to not be reliant on global variables. 
+*/
 nameFieldFocus();
 hideJobRoleField();
 tShirtSelection();
