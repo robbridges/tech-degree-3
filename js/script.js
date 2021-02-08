@@ -221,14 +221,14 @@ Checks if valid zipcode, Should only match a 5 digit number
 @Param text {String} regex string we are comparing for a match
 */
 const isValidZip = (text) => {
-  return regexTester(/\d{5}/, text);
+  return regexTester(/^\d{5}$/, text);
 }
 /*
 Checks if valid cvv dode, Should only match a 3 digit number
 @Param text {String} regex string we are comparing for a match
 */
 const isValidCVV = (text) => {
-  return regexTester(/\d{3}/, text);
+  return regexTester(/^\d{3}$/, text);
 }
 /*
 Checks if the text to test contains numbers. We use use when validating the name keyup event
@@ -336,9 +336,11 @@ const activityDisable = () => {
           === activitiesList[i].attributes['data-day-and-time'].value) {
             
             activitiesList[i].parentElement.className ='disabled';
+            activitiesList[i].setAttribute('disabled', true);
           } else if (!e.target.checked && e.target.attributes['data-day-and-time'].value
             === activitiesList[i].attributes['data-day-and-time'].value ) {
               activitiesList[i].parentElement.className = '';
+              activitiesList[i].removeAttribute('disabled');
           }
       }
     });
